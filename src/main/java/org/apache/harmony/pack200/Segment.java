@@ -32,12 +32,13 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
  * A Pack200 archive consists of one or more Segments.
  */
-public class Segment implements ClassVisitor {
+public class Segment extends ClassVisitor {
 
     private SegmentHeader segmentHeader;
     private CpBands cpBands;
@@ -53,6 +54,10 @@ public class Segment implements ClassVisitor {
     private PackingOptions options;
     private boolean stripDebug;
     private Attribute[] nonStandardAttributePrototypes;
+
+    public Segment() {
+        super(Opcodes.ASM7);
+    }
 
     /**
      * The main method on Segment. Reads in all the class files, packs them and
@@ -265,7 +270,11 @@ public class Segment implements ClassVisitor {
      * It delegates to BcBands for bytecode related visits and to ClassBands for
      * everything else.
      */
-    public class SegmentMethodVisitor implements MethodVisitor {
+    public class SegmentMethodVisitor extends MethodVisitor {
+
+        public SegmentMethodVisitor() {
+            super(Opcodes.ASM7);
+        }
 
         public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
             return new SegmentAnnotationVisitor(
@@ -394,7 +403,7 @@ public class Segment implements ClassVisitor {
         }
 
         public void visitMethodInsn(int opcode, String owner, String name,
-                String desc) {
+                String desc, boolean isInterface) {
             bcBands.visitMethodInsn(opcode, owner, name, desc);
         }
 
@@ -425,7 +434,7 @@ public class Segment implements ClassVisitor {
      * SegmentAnnotationVisitor implements <code>AnnotationVisitor</code> to
      * visit Annotations found in a class file.
      */
-    public class SegmentAnnotationVisitor implements AnnotationVisitor {
+    public class SegmentAnnotationVisitor extends AnnotationVisitor {
 
         private int context = -1;
         private int parameter = -1;
@@ -442,17 +451,20 @@ public class Segment implements ClassVisitor {
 
         public SegmentAnnotationVisitor(int context, String desc,
                 boolean visible) {
+            super(Opcodes.ASM7);
             this.context = context;
             this.desc = desc;
             this.visible = visible;
         }
 
         public SegmentAnnotationVisitor(int context) {
+            super(Opcodes.ASM7);
             this.context = context;
         }
 
         public SegmentAnnotationVisitor(int context, int parameter,
                 String desc, boolean visible) {
+            super(Opcodes.ASM7);
             this.context = context;
             this.parameter = parameter;
             this.desc = desc;
@@ -474,7 +486,7 @@ public class Segment implements ClassVisitor {
             nameRU.add(name);
             nestTypeRS.add(desc);
             nestPairN.add(new Integer(0));
-            return new AnnotationVisitor() {
+            return new AnnotationVisitor(Opcodes.ASM7) {
                 public void visit(String name, Object value) {
                     Integer numPairs = (Integer) nestPairN.remove(nestPairN.size() - 1);
                     nestPairN.add(new Integer(numPairs.intValue() + 1));
@@ -537,9 +549,9 @@ public class Segment implements ClassVisitor {
             values.add(value);
         }
     }
-    
-    public class ArrayVisitor implements AnnotationVisitor  {
-        
+
+    public class ArrayVisitor extends AnnotationVisitor  {
+
         private int indexInCaseArrayN;
         private List caseArrayN;
         private List values;
@@ -547,13 +559,14 @@ public class Segment implements ClassVisitor {
         private List T;
 
         public ArrayVisitor(List caseArrayN, List T, List nameRU, List values) {
+            super(Opcodes.ASM7);
             this.caseArrayN = caseArrayN;
             this.T = T;
             this.nameRU = nameRU;
             this.values = values;
             this.indexInCaseArrayN = caseArrayN.size() - 1;
         }
-        
+
         public void visit(String name, Object value) {
             Integer numCases = (Integer) caseArrayN.remove(indexInCaseArrayN);
             caseArrayN.add(indexInCaseArrayN, new Integer(numCases.intValue() + 1));
@@ -594,7 +607,11 @@ public class Segment implements ClassVisitor {
      * SegmentFieldVisitor implements <code>FieldVisitor</code> to visit the
      * metadata relating to fields in a class file.
      */
-    public class SegmentFieldVisitor implements FieldVisitor {
+    public class SegmentFieldVisitor extends FieldVisitor {
+
+        public SegmentFieldVisitor() {
+            super(Opcodes.ASM7);
+        }
 
         public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
             return new SegmentAnnotationVisitor(MetadataBandGroup.CONTEXT_FIELD,
