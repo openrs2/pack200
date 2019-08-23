@@ -104,7 +104,7 @@ public class NewAttribute extends Attribute {
     protected Attribute read(ClassReader cr, int off, int len, char[] buf,
             int codeOff, Label[] labels) {
         byte[] attributeContents = new byte[len];
-        System.arraycopy(cr.b, off, attributeContents, 0, len);
+        System.arraycopy(((Pack200ClassReader) cr).b, off, attributeContents, 0, len);
         return new NewAttribute(cr, type, layout, attributeContents, buf, codeOff,
                 labels);
     }

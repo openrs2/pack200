@@ -24,6 +24,7 @@ import org.objectweb.asm.ClassReader;
  */
 public class Pack200ClassReader extends ClassReader {
 
+    final byte[] b;
     private boolean lastConstantHadWideIndex;
     private int lastUnsignedShort;
     private boolean anySyntheticAttributes;
@@ -35,13 +36,14 @@ public class Pack200ClassReader extends ClassReader {
      */
     public Pack200ClassReader(byte[] b) {
         super(b);
+        this.b = b;
     }
 
     public int readUnsignedShort(int index) {
         // Doing this to check whether last load-constant instruction was ldc (18) or ldc_w (19)
         // TODO:  Assess whether this impacts on performance
         int unsignedShort = super.readUnsignedShort(index);
-        if(index > 0 && b[index - 1] == 19) {
+        if(index > 0 && readByte(index - 1) == 19) {
             lastUnsignedShort = unsignedShort;
         } else {
             lastUnsignedShort = Short.MIN_VALUE;
