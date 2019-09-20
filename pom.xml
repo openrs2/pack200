@@ -2,16 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>dev.openrs2</groupId>
+  <parent>
+    <groupId>dev.openrs2</groupId>
+    <artifactId>openrs2-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
   <artifactId>pack200</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Pack200</name>
+  <description>Fork of Apache Harmony's Pack200 implementation.</description>
+  <licenses>
+    <license>
+      <name>Apache License v2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <scm>
+    <connection>scm:git:https://git.openrs2.dev/openrs2/pack200.git</connection>
+    <developerConnection>scm:git:git@git.openrs2.dev:openrs2/pack200.git</developerConnection>
+    <url>https://git.openrs2.dev/openrs2/pack200</url>
+  </scm>
+  <issueManagement>
+    <system>Gitea</system>
+    <url>https://git.openrs2.dev/openrs2/pack200/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>https://build.openrs2.dev/job/pack200/</url>
+  </ciManagement>
 
   <dependencies>
     <dependency>
@@ -27,12 +49,36 @@
     </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>openrs2</id>
+      <name>OpenRS2</name>
+      <url>https://repo.openrs2.dev/repository/openrs2/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>openrs2-snapshots</id>
+      <name>OpenRS2 Snapshots</name>
+      <url>https://repo.openrs2.dev/repository/openrs2-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
         <configuration>
           <source>12</source>
           <target>12</target>
