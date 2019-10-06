@@ -4,3 +4,4 @@
 *.iml
 *~
 /target
+hs_err_pid*.log
