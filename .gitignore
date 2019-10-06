@@ -5,3 +5,5 @@
 *~
 /target
 hs_err_pid*.log
+pom.xml.releaseBackup
+release.properties
