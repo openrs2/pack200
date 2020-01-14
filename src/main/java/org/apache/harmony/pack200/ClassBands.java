@@ -1031,7 +1031,7 @@ public class ClassBands extends BandSet {
             if(latestCodeFlag == (1 << 2) && latestLocalVariableTableN == 0) {
                 codeLocalVariableTableN.remove(codeLocalVariableTableN.size() - 1);
                 codeFlags.remove(codeFlags.size() - 1);
-                codeFlags.add(new Integer(0));
+                codeFlags.add(new Long(0));
             }
         }
     }
