@@ -56,8 +56,6 @@ public class Pack200PackerAdapter extends Pack200Adapter implements Packer {
             throw new IllegalArgumentException(
                     "Must specify both input and output streams");
         completed(0);
-        PackingOptions options = new PackingOptions();
-
         try {
             new org.apache.harmony.pack200.Archive(in, out, options).pack();
         } catch (Pack200Exception e) {
