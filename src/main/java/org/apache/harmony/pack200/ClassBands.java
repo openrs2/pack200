@@ -1027,11 +1027,13 @@ public class ClassBands extends BandSet {
         }
         if(codeFlags.size() > 0) {
             long latestCodeFlag = ((Long)codeFlags.get(codeFlags.size() - 1)).longValue();
-            int latestLocalVariableTableN = codeLocalVariableTableN.get(codeLocalVariableTableN.size() - 1);
-            if(latestCodeFlag == (1 << 2) && latestLocalVariableTableN == 0) {
-                codeLocalVariableTableN.remove(codeLocalVariableTableN.size() - 1);
-                codeFlags.remove(codeFlags.size() - 1);
-                codeFlags.add(new Long(0));
+            if (latestCodeFlag == (1 << 2)) {
+                int latestLocalVariableTableN = codeLocalVariableTableN.get(codeLocalVariableTableN.size() - 1);
+                if (latestLocalVariableTableN == 0) {
+                    codeLocalVariableTableN.remove(codeLocalVariableTableN.size() - 1);
+                    codeFlags.remove(codeFlags.size() - 1);
+                    codeFlags.add(new Long(0));
+                }
             }
         }
     }
