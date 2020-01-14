@@ -34,6 +34,10 @@ public class Pack200PackerAdapter extends Pack200Adapter implements Packer {
 
     private final PackingOptions options = new PackingOptions();
 
+    public Pack200PackerAdapter() {
+        options.setGzip(false);
+    }
+
     public void pack(JarFile file, OutputStream out) throws IOException {
         if (file == null || out == null)
             throw new IllegalArgumentException(
