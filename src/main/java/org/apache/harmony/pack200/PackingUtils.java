@@ -206,7 +206,14 @@ public class PackingUtils {
             // TODO: Should probably allow this
             throw new RuntimeException("Large Class!");
         } else if (size < 0) {
-            size = 0;
+            byte[] temp = new byte[4096];
+            try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                int len;
+                while ((len = inputStream.read(temp, 0, temp.length)) != -1) {
+                    out.write(temp, 0, len);
+                }
+                return out.toByteArray();
+            }
         }
         byte[] bytes = new byte[(int) size];
         if (inputStream.read(bytes) != size) {
