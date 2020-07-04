@@ -56,7 +56,7 @@ public class Segment extends ClassVisitor {
     private Attribute[] nonStandardAttributePrototypes;
 
     public Segment() {
-        super(Opcodes.ASM7);
+        super(Opcodes.ASM8);
     }
 
     /**
@@ -273,7 +273,7 @@ public class Segment extends ClassVisitor {
     public class SegmentMethodVisitor extends MethodVisitor {
 
         public SegmentMethodVisitor() {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM8);
         }
 
         public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
@@ -451,20 +451,20 @@ public class Segment extends ClassVisitor {
 
         public SegmentAnnotationVisitor(int context, String desc,
                 boolean visible) {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM8);
             this.context = context;
             this.desc = desc;
             this.visible = visible;
         }
 
         public SegmentAnnotationVisitor(int context) {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM8);
             this.context = context;
         }
 
         public SegmentAnnotationVisitor(int context, int parameter,
                 String desc, boolean visible) {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM8);
             this.context = context;
             this.parameter = parameter;
             this.desc = desc;
@@ -486,7 +486,7 @@ public class Segment extends ClassVisitor {
             nameRU.add(name);
             nestTypeRS.add(desc);
             nestPairN.add(new Integer(0));
-            return new AnnotationVisitor(Opcodes.ASM7) {
+            return new AnnotationVisitor(Opcodes.ASM8) {
                 public void visit(String name, Object value) {
                     Integer numPairs = (Integer) nestPairN.remove(nestPairN.size() - 1);
                     nestPairN.add(new Integer(numPairs.intValue() + 1));
@@ -559,7 +559,7 @@ public class Segment extends ClassVisitor {
         private List T;
 
         public ArrayVisitor(List caseArrayN, List T, List nameRU, List values) {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM8);
             this.caseArrayN = caseArrayN;
             this.T = T;
             this.nameRU = nameRU;
@@ -610,7 +610,7 @@ public class Segment extends ClassVisitor {
     public class SegmentFieldVisitor extends FieldVisitor {
 
         public SegmentFieldVisitor() {
-            super(Opcodes.ASM7);
+            super(Opcodes.ASM8);
         }
 
         public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
