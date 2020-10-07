@@ -32,8 +32,8 @@
     <url>https://git.openrs2.org/openrs2/pack200/issues</url>
   </issueManagement>
   <ciManagement>
-    <system>Jenkins</system>
-    <url>https://build.openrs2.org/job/pack200/</url>
+    <system>Drone</system>
+    <url>https://build.openrs2.org/openrs2/pack200/</url>
   </ciManagement>
 
   <dependencies>
